@@ -10,6 +10,8 @@ import FirebaseCore
 
 @main
 struct FartAppApp: App {
+    @StateObject private var firebaseService = FirebaseService.shared
+    
     init() {
         print("🔄 FartAppApp: Initializing...")
         FirebaseApp.configure()
@@ -19,7 +21,7 @@ struct FartAppApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .environmentObject(FirebaseService.shared)
+                .environmentObject(firebaseService)
                 .onAppear {
                     print("🔄 FartAppApp: ContentView appeared")
                 }

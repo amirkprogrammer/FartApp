@@ -45,8 +45,14 @@ class FirebaseService: ObservableObject {
     }
     
     func signUp(email: String, password: String, username: String) async throws {
-        isLoading = true
-        defer { isLoading = false }
+        await MainActor.run {
+            isLoading = true
+        }
+        defer { 
+            Task { @MainActor in
+                isLoading = false
+            }
+        }
         
         let result = try await auth.createUser(withEmail: email, password: password)
         let user = result.user
@@ -68,8 +74,14 @@ class FirebaseService: ObservableObject {
     }
     
     func signIn(email: String, password: String) async throws {
-        isLoading = true
-        defer { isLoading = false }
+        await MainActor.run {
+            isLoading = true
+        }
+        defer { 
+            Task { @MainActor in
+                isLoading = false
+            }
+        }
         
         _ = try await auth.signIn(withEmail: email, password: password)
     }
@@ -77,8 +89,15 @@ class FirebaseService: ObservableObject {
     // MARK: - Google Sign-In
     
     func signInWithGoogle() async throws {
-        isLoading = true
-        defer { isLoading = false }
+        await MainActor.run {
+            isLoading = true
+        }
+        
+        defer { 
+            Task { @MainActor in
+                isLoading = false
+            }
+        }
         
         guard let presentingViewController = (UIApplication.shared.connectedScenes.first as? UIWindowScene)?.windows.first?.rootViewController else {
             throw FirebaseError.presentationError

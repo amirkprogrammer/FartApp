@@ -27,47 +27,35 @@ class ProfileViewModel: ObservableObject {
     }
 
     func loadUser() {
-        guard let currentUser = firebaseService.currentUser else {
-            errorMessage = "No user is currently logged in"
-            return
-        }
-        
-        isLoading = true
-        errorMessage = nil
-        
         Task {
+            await MainActor.run {
+                isLoading = true
+                errorMessage = nil
+            }
+            
             do {
-                if let userProfile = try await firebaseService.getUserProfile(userId: currentUser.uid) {
+                guard let currentUser = firebaseService.currentUser else {
                     await MainActor.run {
-                        self.user = userProfile
-                        self.isLoading = false
+                        errorMessage = "No authenticated user found"
+                        isLoading = false
                     }
-                } else {
-                    // Create a default profile if none exists
-                    let defaultProfile = UserProfile(
-                        id: currentUser.uid,
-                        username: currentUser.displayName ?? "User",
-                        email: currentUser.email ?? "",
-                        avatarURL: currentUser.photoURL?.absoluteString ?? "",
-                        bio: "Welcome to FartApp! 💨",
-                        followerCount: 0,
-                        followingCount: 0,
-                        postCount: 0,
-                        joinDate: Date()
-                    )
-                    
-                    // Save the default profile
-                    try await firebaseService.saveUserProfile(defaultProfile)
-                    
-                    await MainActor.run {
-                        self.user = defaultProfile
-                        self.isLoading = false
+                    return
+                }
+                
+                let profile = try await firebaseService.getUserProfile(userId: currentUser.uid)
+                
+                await MainActor.run {
+                    if let profile = profile {
+                        self.userProfile = profile
+                    } else {
+                        errorMessage = "Failed to load user profile"
                     }
+                    isLoading = false
                 }
             } catch {
                 await MainActor.run {
-                    self.errorMessage = "Failed to load user profile: \(error.localizedDescription)"
-                    self.isLoading = false
+                    errorMessage = "Failed to load user: \(error.localizedDescription)"
+                    isLoading = false
                 }
             }
         }

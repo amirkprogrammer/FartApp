@@ -30,42 +30,48 @@ class AuthViewModel: ObservableObject {
             .assign(to: &$isAuthenticated)
     }
     
-    func signIn(email: String, password: String) async {
-        isLoading = true
-        errorMessage = nil
-        
-        do {
-            try await firebaseService.signIn(email: email, password: password)
-            isLoading = false
-        } catch {
-            errorMessage = "Sign in failed: \(error.localizedDescription)"
-            isLoading = false
+    func signUp(email: String, password: String, username: String) async throws {
+        await MainActor.run {
+            isLoading = true
+            errorMessage = nil
         }
+        
+        defer { 
+            Task { @MainActor in
+                isLoading = false
+            }
+        }
+        
+        try await firebaseService.signUp(email: email, password: password, username: username)
     }
     
-    func signUp(email: String, password: String, username: String) async {
-        isLoading = true
-        errorMessage = nil
-        
-        do {
-            try await firebaseService.signUp(email: email, password: password, username: username)
-            isLoading = false
-        } catch {
-            errorMessage = "Sign up failed: \(error.localizedDescription)"
-            isLoading = false
+    func signIn(email: String, password: String) async throws {
+        await MainActor.run {
+            isLoading = true
+            errorMessage = nil
         }
+        
+        defer { 
+            Task { @MainActor in
+                isLoading = false
+            }
+        }
+        
+        try await firebaseService.signIn(email: email, password: password)
     }
     
-    func signOut() async {
-        isLoading = true
-        
-        do {
-            try firebaseService.signOut()
-            isLoading = false
-        } catch {
-            errorMessage = "Sign out failed: \(error.localizedDescription)"
-            isLoading = false
+    func signOut() async throws {
+        await MainActor.run {
+            isLoading = true
         }
+        
+        defer { 
+            Task { @MainActor in
+                isLoading = false
+            }
+        }
+        
+        try firebaseService.signOut()
     }
 }
 

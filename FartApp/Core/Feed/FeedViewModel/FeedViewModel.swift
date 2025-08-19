@@ -27,47 +27,44 @@ class FeedViewModel: ObservableObject {
     
     func loadPosts() {
         Task {
-            isLoading = true
-            errorMessage = nil
-            
-            print("🔄 FeedViewModel: Starting to load posts...")
-            
-            // Re-enable Firebase for real data
-            do {
-                posts = try await firebaseService.getPosts(limit: 20)
-                print("✅ FeedViewModel: Successfully loaded \(posts.count) posts from Firebase")
-            } catch {
-                print("❌ FeedViewModel: Firebase failed with error: \(error.localizedDescription)")
-                errorMessage = error.localizedDescription
-                // Fallback to mock data if Firebase fails
-                print("🔄 FeedViewModel: Falling back to mock data...")
-                loadMockPosts()
-                print("✅ FeedViewModel: Loaded \(posts.count) mock posts")
+            await MainActor.run {
+                isLoading = true
+                errorMessage = nil
             }
             
-            isLoading = false
+            do {
+                let posts = try await firebaseService.getPosts()
+                await MainActor.run {
+                    self.posts = posts
+                    isLoading = false
+                }
+            } catch {
+                await MainActor.run {
+                    errorMessage = "Failed to load posts: \(error.localizedDescription)"
+                    isLoading = false
+                }
+            }
         }
     }
     
     func refreshPosts() {
         Task {
-            print("🔄 FeedViewModel: Refreshing posts...")
-            isLoading = true
-            errorMessage = nil
-
-            do {
-                posts = try await firebaseService.getPosts(limit: 20)
-                print("✅ FeedViewModel: Successfully refreshed \(posts.count) posts from Firebase")
-            } catch {
-                print("❌ FeedViewModel: Firebase refresh failed with error: \(error.localizedDescription)")
-                errorMessage = error.localizedDescription
-                // Fallback to mock data if Firebase fails
-                print("🔄 FeedViewModel: Falling back to mock data...")
-                loadMockPosts()
-                print("✅ FeedViewModel: Loaded \(posts.count) mock posts")
+            await MainActor.run {
+                isLoading = true
             }
             
-            isLoading = false
+            do {
+                let posts = try await firebaseService.getPosts()
+                await MainActor.run {
+                    self.posts = posts
+                    isLoading = false
+                }
+            } catch {
+                await MainActor.run {
+                    errorMessage = "Failed to refresh posts: \(error.localizedDescription)"
+                    isLoading = false
+                }
+            }
         }
     }
     
