@@ -46,7 +46,7 @@ class ProfileViewModel: ObservableObject {
                 
                 await MainActor.run {
                     if let profile = profile {
-                        self.userProfile = profile
+                        self.user = profile
                     } else {
                         errorMessage = "Failed to load user profile"
                     }

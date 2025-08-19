@@ -113,14 +113,12 @@ struct VideoRecorderView: View {
         .onDisappear {
             cameraManager.stopSession()
         }
-        .alert("Error", isPresented: $showingAlert) {
-            Button("OK") {
-                if alertMessage.contains("permission") {
-                    dismiss()
-                }
-            }
-        } message: {
-            Text(alertMessage)
+        .alert(isPresented: $showingAlert) {
+            Alert(
+                title: Text("Error"),
+                message: Text(alertMessage),
+                dismissButton: .default(Text("OK"))
+            )
         }
         .overlay {
             if showingSuccess {

@@ -116,10 +116,12 @@ struct LoginView: View {
             .padding()
             .navigationBarHidden(true)
         }
-        .alert("Authentication Error", isPresented: $showingAlert) {
-            Button("OK") { }
-        } message: {
-            Text(alertMessage)
+        .alert(isPresented: $showingAlert) {
+            Alert(
+                title: Text("Authentication Error"),
+                message: Text(alertMessage),
+                dismissButton: .default(Text("OK"))
+            )
         }
     }
     

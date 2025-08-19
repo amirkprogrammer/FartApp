@@ -72,28 +72,32 @@ struct ProfileView: View {
                     }
                 )
             }
-            .alert("Sign Out", isPresented: $showingSignOutAlert) {
-                Button("Yes", role: .destructive) {
-                    Task {
-                        do {
-                            try await viewModel.firebaseService.signOut()
-                        } catch {
-                            print("Failed to sign out: \(error.localizedDescription)")
+            .alert(isPresented: $showingSignOutAlert) {
+                Alert(
+                    title: Text("Sign Out"),
+                    message: Text("Are you sure you want to sign out?"),
+                    primaryButton: .destructive(Text("Sign Out")) {
+                        Task {
+                            do {
+                                try await viewModel.firebaseService.signOut()
+                            } catch {
+                                print("Sign out failed: \(error.localizedDescription)")
+                            }
                         }
-                    }
-                }
-                Button("Cancel", role: .cancel) { }
-            } message: {
-                Text("Are you sure you want to sign out?")
+                    },
+                    secondaryButton: .cancel()
+                )
             }
-            .alert("Clear Cache", isPresented: $showingClearCacheAlert) {
-                Button("Yes", role: .destructive) {
-                    videoCacheManager.clearCache()
-                    print("✅ ProfileView: Video cache cleared.")
-                }
-                Button("Cancel", role: .cancel) { }
-            } message: {
-                Text("Are you sure you want to clear the video cache? This will free up space but may cause videos to load slower initially.")
+            .alert(isPresented: $showingClearCacheAlert) {
+                Alert(
+                    title: Text("Clear Cache"),
+                    message: Text("This will clear all cached videos. Are you sure?"),
+                    primaryButton: .destructive(Text("Clear Cache")) {
+                        videoCacheManager.clearCache()
+                        print("✅ ProfileView: Video cache cleared.")
+                    },
+                    secondaryButton: .cancel()
+                )
             }
             .sheet(isPresented: $showingUsernameUpdate) {
                 UsernameUpdateSheet(
@@ -108,10 +112,22 @@ struct ProfileView: View {
                     }
                 )
             }
-            .alert("Username Update", isPresented: $showingUsernameAlert) {
-                Button("OK") { }
-            } message: {
-                Text(usernameAlertMessage)
+            .alert(isPresented: $showingUsernameAlert) {
+                Alert(
+                    title: Text("Username Update"),
+                    message: Text("This will update your username across all posts. Continue?"),
+                    primaryButton: .default(Text("Update")) {
+                        Task {
+                            do {
+                                try await viewModel.firebaseService.updateUsername(newUsername)
+                                newUsername = ""
+                            } catch {
+                                print("Username update failed: \(error.localizedDescription)")
+                            }
+                        }
+                    },
+                    secondaryButton: .cancel()
+                )
             }
         }
     }
