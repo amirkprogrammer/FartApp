@@ -6,9 +6,9 @@
 //
 
 import SwiftUI
-//import AVFoundation
-//import Photos
-//import AVKit
+import AVFoundation
+import Photos
+import AVKit
 
 struct VideoRecorderView: View {
     @StateObject var cameraManager: CameraManager
@@ -17,6 +17,7 @@ struct VideoRecorderView: View {
     @State private var timer: Timer?
     @State private var showingAlert = false
     @State private var alertMessage = ""
+    @State private var showingSuccess = false
     @Environment(\.dismiss) private var dismiss
     
     let onVideoRecorded: (URL) -> Void
@@ -121,6 +122,22 @@ struct VideoRecorderView: View {
         } message: {
             Text(alertMessage)
         }
+        .overlay {
+            if showingSuccess {
+                VStack {
+                    Image(systemName: "checkmark.circle.fill")
+                        .font(.system(size: 60))
+                        .foregroundStyle(.green)
+                    Text("Video Saved!")
+                        .font(.title2)
+                        .fontWeight(.semibold)
+                        .foregroundStyle(.white)
+                }
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .background(.black.opacity(0.8))
+                .transition(.opacity)
+            }
+        }
     }
     
     @MainActor
@@ -165,6 +182,11 @@ struct VideoRecorderView: View {
             switch result {
             case .success(let url):
                 onVideoRecorded(url)
+                showingSuccess = true
+                // Automatically dismiss after successful recording
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                    dismiss()
+                }
             case .failure(let error):
                 alertMessage = error.localizedDescription
                 showingAlert = true

@@ -20,6 +20,57 @@ struct LoadingView: View {
     }
 }
 
+struct ProfileErrorView: View {
+    let message: String
+    let retryAction: () -> Void
+    
+    var body: some View {
+        VStack(spacing: 16) {
+            Image(systemName: "exclamationmark.triangle.fill")
+                .font(.system(size: 50))
+                .foregroundStyle(.red)
+            
+            Text("Error")
+                .font(.title2)
+                .fontWeight(.bold)
+            
+            Text(message)
+                .font(.subheadline)
+                .foregroundStyle(.secondary)
+                .multilineTextAlignment(.center)
+                .padding(.horizontal)
+            
+            Button("Retry") {
+                retryAction()
+            }
+            .buttonStyle(.borderedProminent)
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .padding()
+    }
+}
+
+struct ProfileEmptyView: View {
+    var body: some View {
+        VStack(spacing: 16) {
+            Image(systemName: "person.crop.circle.badge.questionmark")
+                .font(.system(size: 50))
+                .foregroundStyle(.gray)
+            
+            Text("No Profile Data")
+                .font(.title2)
+                .fontWeight(.bold)
+            
+            Text("Unable to load profile information.")
+                .font(.subheadline)
+                .foregroundStyle(.secondary)
+                .multilineTextAlignment(.center)
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .padding()
+    }
+}
+
 struct NotificationsView: View {
     var body: some View {
         NavigationView {

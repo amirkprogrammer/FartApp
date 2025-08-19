@@ -6,13 +6,36 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		99A925CC2E55147400F51133 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 99A925CB2E55147400F51133 /* GoogleSignIn */; };
+		99A925CE2E55147400F51133 /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 99A925CD2E55147400F51133 /* GoogleSignInSwift */; };
+		99DA10912E53032800770D8C /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 99DA10902E53032800770D8C /* FirebaseAuth */; };
+		99DA10932E53032800770D8C /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = 99DA10922E53032800770D8C /* FirebaseCore */; };
+		99DA10952E53032800770D8C /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = 99DA10942E53032800770D8C /* FirebaseDatabase */; };
+		99DA10972E53032800770D8C /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 99DA10962E53032800770D8C /* FirebaseFirestore */; };
+		99DA10992E53067700770D8C /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 99DA10982E53067700770D8C /* FirebaseStorage */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		617E7D322E4531BE0007D9BB /* FartApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FartApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		99A925D02E55149700F51133 /* Exceptions for "FartApp" folder in "FartApp" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 617E7D312E4531BE0007D9BB /* FartApp */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		617E7D342E4531BE0007D9BB /* FartApp */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				99A925D02E55149700F51133 /* Exceptions for "FartApp" folder in "FartApp" target */,
+			);
 			path = FartApp;
 			sourceTree = "<group>";
 		};
@@ -23,6 +46,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				99DA10952E53032800770D8C /* FirebaseDatabase in Frameworks */,
+				99DA10972E53032800770D8C /* FirebaseFirestore in Frameworks */,
+				99A925CE2E55147400F51133 /* GoogleSignInSwift in Frameworks */,
+				99DA10932E53032800770D8C /* FirebaseCore in Frameworks */,
+				99DA10992E53067700770D8C /* FirebaseStorage in Frameworks */,
+				99DA10912E53032800770D8C /* FirebaseAuth in Frameworks */,
+				99A925CC2E55147400F51133 /* GoogleSignIn in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -33,6 +63,7 @@
 			isa = PBXGroup;
 			children = (
 				617E7D342E4531BE0007D9BB /* FartApp */,
+				99DA108F2E53032800770D8C /* Frameworks */,
 				617E7D332E4531BE0007D9BB /* Products */,
 			);
 			sourceTree = "<group>";
@@ -43,6 +74,13 @@
 				617E7D322E4531BE0007D9BB /* FartApp.app */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		99DA108F2E53032800770D8C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -65,6 +103,13 @@
 			);
 			name = FartApp;
 			packageProductDependencies = (
+				99DA10902E53032800770D8C /* FirebaseAuth */,
+				99DA10922E53032800770D8C /* FirebaseCore */,
+				99DA10942E53032800770D8C /* FirebaseDatabase */,
+				99DA10962E53032800770D8C /* FirebaseFirestore */,
+				99DA10982E53067700770D8C /* FirebaseStorage */,
+				99A925CB2E55147400F51133 /* GoogleSignIn */,
+				99A925CD2E55147400F51133 /* GoogleSignInSwift */,
 			);
 			productName = FartApp;
 			productReference = 617E7D322E4531BE0007D9BB /* FartApp.app */;
@@ -94,6 +139,10 @@
 			);
 			mainGroup = 617E7D292E4531BE0007D9BB;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				99DA108E2E53031400770D8C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				99A925CA2E55147400F51133 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 617E7D332E4531BE0007D9BB /* Products */;
 			projectDirPath = "";
@@ -256,6 +305,7 @@
 				DEVELOPMENT_TEAM = G627HA76ZA;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = FartApp/Info.plist;
 				INFOPLIST_KEY_NSCameraUsageDescription = "This app uses the camera to let you take profile pictures.";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "This app uses the microphone to let you record audio.";
 				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "This app needs permission to save images to your photo library.\n";
@@ -287,6 +337,7 @@
 				DEVELOPMENT_TEAM = G627HA76ZA;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = FartApp/Info.plist;
 				INFOPLIST_KEY_NSCameraUsageDescription = "This app uses the camera to let you take profile pictures.";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "This app uses the microphone to let you record audio.";
 				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "This app needs permission to save images to your photo library.\n";
@@ -330,6 +381,63 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		99A925CA2E55147400F51133 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/google/GoogleSignIn-iOS";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 9.0.0;
+			};
+		};
+		99DA108E2E53031400770D8C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 12.1.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		99A925CB2E55147400F51133 /* GoogleSignIn */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 99A925CA2E55147400F51133 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			productName = GoogleSignIn;
+		};
+		99A925CD2E55147400F51133 /* GoogleSignInSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 99A925CA2E55147400F51133 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			productName = GoogleSignInSwift;
+		};
+		99DA10902E53032800770D8C /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 99DA108E2E53031400770D8C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
+		99DA10922E53032800770D8C /* FirebaseCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 99DA108E2E53031400770D8C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCore;
+		};
+		99DA10942E53032800770D8C /* FirebaseDatabase */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 99DA108E2E53031400770D8C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseDatabase;
+		};
+		99DA10962E53032800770D8C /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 99DA108E2E53031400770D8C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
+		};
+		99DA10982E53067700770D8C /* FirebaseStorage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 99DA108E2E53031400770D8C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseStorage;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 617E7D2A2E4531BE0007D9BB /* Project object */;
 }

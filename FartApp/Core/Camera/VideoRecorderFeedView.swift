@@ -68,6 +68,7 @@ struct VideoRecorderFeedView: View {
             timestamp: Date(),
             caption: "New video"
         )
+        feedPosts.append(newPost)
     }
 }
 

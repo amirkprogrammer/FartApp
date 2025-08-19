@@ -40,22 +40,29 @@ struct VideoThumbnailView: View {
     }
     
     private func generateThumbnail() {
-        let asset = AVAsset(url: videoURL)
+        let asset = AVURLAsset(url: videoURL)
         let imageGenerator = AVAssetImageGenerator(asset: asset)
         imageGenerator.appliesPreferredTrackTransform = true
         
         let time = CMTime(seconds: 1, preferredTimescale: 60)
         
         DispatchQueue.global(qos: .background).async {
-            do {
-                let cgImage = try imageGenerator.copyCGImage(at: time, actualTime: nil)
+            imageGenerator.generateCGImageAsynchronously(for: time) { cgImage, actualTime, error in
+                if let error = error {
+                    print("Error generating thumbnail: \(error)")
+                    return
+                }
+                
+                guard let cgImage = cgImage else {
+                    print("No thumbnail generated")
+                    return
+                }
+                
                 let uiImage = UIImage(cgImage: cgImage)
                 
                 DispatchQueue.main.async {
                     self.thumbnail = uiImage
                 }
-            } catch {
-                print("Error generating thumbnail: \(error)")
             }
         }
     }
