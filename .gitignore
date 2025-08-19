@@ -1,0 +1,13 @@
+FartApp/GoogleService-Info.plist
+
+# Firebase Configuration
+*.plist
+GoogleService-Info.plist
+
+# Xcode
+DerivedData/
+*.xcworkspace/xcshareddata/
+
+# Environment files
+.env
+*.env
